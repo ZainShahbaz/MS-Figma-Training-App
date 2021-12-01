@@ -1,7 +1,3 @@
-body{
-  /* background-color: #e5e5e5; */
-  
-}
 select {
   width: 100%;
   padding: 12px 20px;
@@ -14,7 +10,7 @@ select {
 
 input[type="submit"] {
   width: 100%;
-  background-color: #02E0B1;;
+  background-color: #02e0b1;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -24,34 +20,56 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-  background-color: #02E0B1;
+  background-color: #02e0b1;
 }
 
 .Main-div {
   height: 100vh;
   width: 20%;
   border-radius: 5px;
-  /* background-color: #e5e5e5; */
   padding: 20px;
   display: flex;
   align-items: center;
   margin: auto;
 }
-/* .TF-Pos{
-   margin-bottom: 10px;
-} */
-.iconify-main{
+.iconify-main {
   height: 100%;
   width: 100%;
 }
-.iconify-menu{
-  height: 25%;
-  width: 25%;
-  margin-right: 15px;
+.iconify-menu {
+  height: 160%;
+  width: 30%;
+  position: absolute;
+  left: -13px;
+
 }
-#error-msg{
+.iconify-menuUS {
+  width: 30%;
+  position: absolute;
+  left: -12px;
+  height: 90%;
+  border-radius: 11px;
+}
+.iconify-buttons{
+  margin-bottom: 7%;
+}
+#error-msg {
   color: red;
-    font-size: small;
-    font-family: Rawline;
-    display: flex;
+  font-size: small;
+  font-family: "Raleway", sans-serif;
+  display: flex;
+}
+.Country_img{
+  width:100%;
+}
+.Country_btn{
+  /* position: absolute; */
+  width: 60px;
+  height: 45px;
+  /* margin-left: -78px; */
+}
+.Country_img2{
+  width:80%;
+  padding: 30px;
+  margin-left: 55px;
 }
