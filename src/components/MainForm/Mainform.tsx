@@ -2,25 +2,21 @@ import React, { useState } from "react";
 import Header from "../Header/Header";
 import "./MainForm.css";
 //Material-UI
+import { makeStyles, createStyles, Theme } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 //React Hook Form
 import { useForm, SubmitHandler } from "react-hook-form";
-
-//Some IntialStates
-let emailValid = false;
-let passValid = true;
-let submitBtn = true;
-
+//Routing
+import { useHistory } from "react-router-dom";
+//Store
+import store from "../../store/store";
 const countries: any = {
   USA: {
     value: "+1-USA",
@@ -36,6 +32,41 @@ const countries: any = {
   },
 };
 
+// const muiStyles = makeStyles((theme: Theme) => {
+//   createStyles({
+//     root: {},
+//     iconifyMain: {
+//       height: "100%",
+//       width: "100%",
+//     },
+//     iconifyMenu: {
+//       height: "160%",
+//       width: "30%",
+//       position: "absolute",
+//       left: "-13px",
+//     },
+//     iconifyMenuUS: {
+//       width: "30%",
+//       position: "absolute",
+//       left: "-12px",
+//       height: "90%",
+//       borderRadius: "11px",
+//     },
+//     iconifyButtons: {
+//       marginBottom: "7%",
+//     },
+//     errorMsg: {
+//       color: "red",
+//       fontSize: "small",
+//       fontFamily: "Raleway, sans-serif",
+//       display: "flex",
+//     },
+//     CountryImg:{
+//       width:"100%"
+//     }
+//   });
+// });
+
 interface IFormInput {
   firstName: string;
   lastName: string;
@@ -46,25 +77,12 @@ interface IFormInput {
 
 export default function Mainform() {
   const [open, setOpen] = React.useState(false);
-
+  const history = useHistory();
   const [country, setCountry] = React.useState<any>(countries.USA);
 
   const FlagsChanger = (country: any) => {
     setCountry(country);
     setOpen(false);
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (
-    event: React.SyntheticEvent<unknown>,
-    reason?: string
-  ) => {
-    if (reason !== "backdropClick") {
-      setOpen(false);
-    }
   };
 
   const {
@@ -74,14 +92,21 @@ export default function Mainform() {
   } = useForm<IFormInput>();
 
   const FormSubmitHandler: SubmitHandler<IFormInput> = (data: IFormInput) => {
+    history.push("./loading");
     console.log(data);
+    store.dispatch({
+      type: "ADD_DATA",
+      payload: data,
+    });
   };
   const [Fname, setFName] = useState("");
   const [Lname, setLName] = useState("");
+  let FormChecker = false;
+  //Redux
 
   return (
     <>
-      <div className="Main-div" style={{}}>
+      <div className="Main-div">
         <div className="FormDiv">
           <Header />
           <form onSubmit={handleSubmit(FormSubmitHandler)}>
@@ -97,6 +122,7 @@ export default function Mainform() {
                 id="outlined-size-normal"
                 label="First Name"
                 value={Fname}
+                className="Fname"
                 style={{ marginRight: "5.75%" }}
                 {...register("firstName", { required: true })}
                 onInput={(evt: any) => {
@@ -110,6 +136,7 @@ export default function Mainform() {
                 id="outlined-size-normal"
                 label="Last Name"
                 value={Lname}
+                className="Lname"
                 {...register("lastName", { required: true })}
                 style={{ marginBottom: "20px", marginLeft: "6.5px" }}
                 onInput={(evt: any) => {
@@ -119,9 +146,21 @@ export default function Mainform() {
                   setLName(caps);
                 }}
               />
+              {errors.firstName && (
+                <span id="error-msg">
+                  <b>First Name is required</b>
+                  {(FormChecker = true)}
+                </span>
+              )}
+              {errors.lastName && (
+                <span id="error-msg2">
+                  <b>Last Name is required</b>
+                  {(FormChecker = true)}
+                </span>
+              )}
             </Box>
             <Button
-              onClick={handleClickOpen}
+              onClick={() => setOpen(true)}
               className="Country_btn"
               style={{ position: "absolute" }}
             >
@@ -131,7 +170,18 @@ export default function Mainform() {
                 className="Country_img"
               />
             </Button>
-            <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
+            <Dialog
+              disableEscapeKeyDown
+              open={open}
+              onClose={(
+                event: React.SyntheticEvent<unknown>,
+                reason?: string
+              ) => {
+                if (reason !== "backdropClick") {
+                  setOpen(false);
+                }
+              }}
+            >
               <DialogTitle>Select Country</DialogTitle>
               <DialogContent>
                 <Box
@@ -160,13 +210,19 @@ export default function Mainform() {
               </DialogContent>
             </Dialog>
             <TextField
-              // fullWidth
+              type="number"
               id="outlined-basic"
               label="Phone Number"
               variant="outlined"
               style={{ width: "80%", marginBottom: "20px", marginLeft: "20%" }}
               {...register("PhoneNumber", { required: true })}
             />
+            {errors.PhoneNumber && (
+              <span id="error-msg">
+                <b>Phone Number is required</b>
+                {(FormChecker = true)}
+              </span>
+            )}
             <TextField
               fullWidth
               label="Email"
@@ -180,6 +236,7 @@ export default function Mainform() {
             {errors.email && (
               <span id="error-msg">
                 <b>Invalid email address</b>
+                {(FormChecker = true)}
               </span>
             )}
 
@@ -190,12 +247,10 @@ export default function Mainform() {
               id="filled-adornment-password"
               {...register("password", {
                 required: true,
+                minLength: 8,
                 pattern: /^(?:(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*)+$/,
               })}
               style={{ marginBottom: "20px" }}
-              // onChange={(evt:any) => {
-              //   console.log(evt.target.innerHTML);
-              // }}
             />
             {errors.password && (
               <span id="error-msg">
@@ -204,14 +259,17 @@ export default function Mainform() {
                   Oops! You need a password longer than 8 characters with
                   numbers and letters.
                 </b>
+                {(FormChecker = true)}
               </span>
             )}
             <input
               type="submit"
+              value="N E X T"
               defaultValue="Next"
-              value="NEXT"
+              id="DisBtn"
               style={{ height: "6vh" }}
-            />
+              disabled={FormChecker}
+            ></input>
           </form>
         </div>
       </div>

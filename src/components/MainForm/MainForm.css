@@ -20,7 +20,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-  background-color: #02e0b1;
+  background-color: #0fb490;
 }
 
 .Main-div {
@@ -63,13 +63,40 @@ input[type="submit"]:hover {
   width:100%;
 }
 .Country_btn{
-  /* position: absolute; */
+  /* position: absolute;       Not Working */
   width: 60px;
   height: 45px;
-  /* margin-left: -78px; */
 }
 .Country_img2{
   width:80%;
   padding: 30px;
   margin-left: 55px;
 }
+#error-msg2{
+  align-items: center;
+  display: contents;
+  color: red;
+  font-size: small;
+  font-family: "Raleway", sans-serif;
+}
+#DisBtn:disabled{
+background-color: #baf3e7;
+color: black;
+}
+
+/* Removing Inline-CSS */
+
+
+
+
+
+.Fname{
+margin-right: 6.75%;
+/* Not Working */
+}
+.Lname{
+  margin-bottom: 20px;
+  margin-left: 6.5px;
+  /* Not Working */
+}
+

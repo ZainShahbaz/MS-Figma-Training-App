@@ -1,0 +1,11 @@
+.SplashDiv {
+  display: flex;
+}
+.HeaderID {
+  font-family: "Comfortaa,cursive"; 
+  /* Not Working */
+}
+.PIcon{
+position: relative;
+margin-top: 7%;
+}
