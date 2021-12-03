@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Header from "../Header/Header";
-import "./MainForm.css";
-//Material-UI
-import { makeStyles, createStyles, Theme } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import { Theme } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
@@ -11,11 +10,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import FormControl from "@mui/material/FormControl";
-//React Hook Form
 import { useForm, SubmitHandler } from "react-hook-form";
-//Routing
 import { useHistory } from "react-router-dom";
-//Store
 import store from "../../store/store";
 const countries: any = {
   USA: {
@@ -32,40 +28,109 @@ const countries: any = {
   },
 };
 
-// const muiStyles = makeStyles((theme: Theme) => {
-//   createStyles({
-//     root: {},
-//     iconifyMain: {
-//       height: "100%",
-//       width: "100%",
-//     },
-//     iconifyMenu: {
-//       height: "160%",
-//       width: "30%",
-//       position: "absolute",
-//       left: "-13px",
-//     },
-//     iconifyMenuUS: {
-//       width: "30%",
-//       position: "absolute",
-//       left: "-12px",
-//       height: "90%",
-//       borderRadius: "11px",
-//     },
-//     iconifyButtons: {
-//       marginBottom: "7%",
-//     },
-//     errorMsg: {
-//       color: "red",
-//       fontSize: "small",
-//       fontFamily: "Raleway, sans-serif",
-//       display: "flex",
-//     },
-//     CountryImg:{
-//       width:"100%"
-//     }
-//   });
-// });
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    height: "100vh",
+    width: "20%",
+    borderRadius: "5px",
+    padding: "20px",
+    display: "flex",
+    alignItems: "center",
+    margin: "auto",
+  },
+  iconifyMain: {
+    height: "100%",
+    width: "100%",
+  },
+  iconifyMenu: {
+    height: "160%",
+    width: "30%",
+    position: "absolute",
+    left: "-13px",
+  },
+  iconifyMenuUS: {
+    width: "30%",
+    position: "absolute",
+    left: "-12px",
+    height: "90%",
+    borderRadius: "11px",
+  },
+  iconifyButtons: {
+    marginBottom: "7%",
+  },
+  phoneNumber: {
+    width: "80%",
+    margin: "0 0 20px 20% !important",
+    display: "flex",
+  },
+  errorMsg: {
+    color: "red",
+    fontSize: "small",
+    fontFamily: "Raleway, sans-serif",
+    display: "flex",
+  },
+  CountryImg: {
+    width: "100%",
+  },
+  CountryBtn: {
+    width: "20%",
+    padding: "0px 10px !important",
+    margin: "5px 10px !important",
+    alignItems:"center",
+    justifyContent:"center",
+  },
+  CountryBtnPos: {
+    top: "30px",
+    right: "10px",
+    width: "20%",
+    height: "0px",
+    margin: "10px 78% 0 0 !important",
+  },
+  CountryImg2: {
+    width: "80%",
+    padding: "30px",
+    marginLeft: "55px",
+  },
+  ErrorMsg2: {
+    alignItems: "center",
+    display: "contents",
+    color: "red",
+    fontSize: "small",
+    fontFamily: "Raleway, sans-serif",
+  },
+  DisBtn: {
+    backgroundColor: "#baf3e7",
+    color: "black",
+  },
+  Fname: {
+    width: "44% !important",
+    marginRight: "7% !important",
+  },
+  Lname: {
+    width: "44% !important",
+  },
+  TxtBottom: {
+    marginBottom: "20px !important",
+  },
+  submitBtn: {
+    width: "100%",
+    backgroundColor: "#02e0b1",
+    color: "white",
+    padding: "14px 20px",
+    margin: "8px 0",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+    height: "6vh",
+    "&:disabled": {
+      backgroundColor: "#baf3e7",
+      color: "black",
+    },
+    "&:hover": {
+      backgroundColor: "#0fb490",
+    },
+  },
+}));
 
 interface IFormInput {
   firstName: string;
@@ -84,6 +149,8 @@ export default function Mainform() {
     setCountry(country);
     setOpen(false);
   };
+
+  const MuiClasses = useStyles();
 
   const {
     register,
@@ -106,8 +173,8 @@ export default function Mainform() {
 
   return (
     <>
-      <div className="Main-div">
-        <div className="FormDiv">
+      <div className={MuiClasses.root}>
+        <div>
           <Header />
           <form onSubmit={handleSubmit(FormSubmitHandler)}>
             <Box
@@ -122,8 +189,7 @@ export default function Mainform() {
                 id="outlined-size-normal"
                 label="First Name"
                 value={Fname}
-                className="Fname"
-                style={{ marginRight: "5.75%" }}
+                className={MuiClasses.Fname}
                 {...register("firstName", { required: true })}
                 onInput={(evt: any) => {
                   const caps =
@@ -136,9 +202,8 @@ export default function Mainform() {
                 id="outlined-size-normal"
                 label="Last Name"
                 value={Lname}
-                className="Lname"
+                className={MuiClasses.Lname}
                 {...register("lastName", { required: true })}
-                style={{ marginBottom: "20px", marginLeft: "6.5px" }}
                 onInput={(evt: any) => {
                   const caps =
                     evt.target.value.charAt(0).toUpperCase() +
@@ -147,13 +212,13 @@ export default function Mainform() {
                 }}
               />
               {errors.firstName && (
-                <span id="error-msg">
+                <span className={MuiClasses.errorMsg}>
                   <b>First Name is required</b>
                   {(FormChecker = true)}
                 </span>
               )}
               {errors.lastName && (
-                <span id="error-msg2">
+                <span className={MuiClasses.ErrorMsg2}>
                   <b>Last Name is required</b>
                   {(FormChecker = true)}
                 </span>
@@ -161,13 +226,12 @@ export default function Mainform() {
             </Box>
             <Button
               onClick={() => setOpen(true)}
-              className="Country_btn"
-              style={{ position: "absolute" }}
+              className={MuiClasses.CountryBtnPos}
             >
               <img
                 src={country.icon}
                 alt={country.value}
-                className="Country_img"
+                className={MuiClasses.CountryImg}
               />
             </Button>
             <Dialog
@@ -193,14 +257,13 @@ export default function Mainform() {
                     {Object.keys(countries).map((country, index) => (
                       <Button
                         key={index}
-                        style={{ marginBottom: "7%" }}
-                        className="Country_btn"
+                        className={MuiClasses.CountryBtn}
                         onClick={() => FlagsChanger(countries[country])}
                       >
                         <img
                           src={countries[country].icon}
                           alt={countries[country].value}
-                          className="Country_img2"
+                          className={MuiClasses.CountryImg2}
                         />
                         {countries[country].value}
                       </Button>
@@ -214,11 +277,11 @@ export default function Mainform() {
               id="outlined-basic"
               label="Phone Number"
               variant="outlined"
-              style={{ width: "80%", marginBottom: "20px", marginLeft: "20%" }}
+              className={MuiClasses.phoneNumber}
               {...register("PhoneNumber", { required: true })}
             />
             {errors.PhoneNumber && (
-              <span id="error-msg">
+              <span className={MuiClasses.errorMsg}>
                 <b>Phone Number is required</b>
                 {(FormChecker = true)}
               </span>
@@ -226,15 +289,14 @@ export default function Mainform() {
             <TextField
               fullWidth
               label="Email"
-              id="fullWidth"
+              className={MuiClasses.TxtBottom}
               {...register("email", {
                 required: true,
                 pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
               })}
-              style={{ marginBottom: "20px" }}
             />
             {errors.email && (
-              <span id="error-msg">
+              <span className={MuiClasses.errorMsg}>
                 <b>Invalid email address</b>
                 {(FormChecker = true)}
               </span>
@@ -245,15 +307,15 @@ export default function Mainform() {
               type="password"
               label="Password"
               id="filled-adornment-password"
+              className={MuiClasses.TxtBottom}
               {...register("password", {
                 required: true,
                 minLength: 8,
                 pattern: /^(?:(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*)+$/,
               })}
-              style={{ marginBottom: "20px" }}
             />
             {errors.password && (
-              <span id="error-msg">
+              <span className={MuiClasses.errorMsg}>
                 <b>
                   {" "}
                   Oops! You need a password longer than 8 characters with
@@ -266,8 +328,7 @@ export default function Mainform() {
               type="submit"
               value="N E X T"
               defaultValue="Next"
-              id="DisBtn"
-              style={{ height: "6vh" }}
+              className={MuiClasses.submitBtn}
               disabled={FormChecker}
             ></input>
           </form>
