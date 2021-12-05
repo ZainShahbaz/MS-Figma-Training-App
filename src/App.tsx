@@ -1,10 +1,10 @@
 import React from "react";
-import Mainform from "./components/MainForm/Mainform";
-import Splash from "./components/LoadingScreen/Splash";
+import Mainform from "components/MainForm/Mainform";
+import Splash from "components/LoadingScreen/Splash";
 import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
 import { Provider } from "react-redux";
-import store from "./store/store";
+import store from "store/store";
 
 
 function App() {

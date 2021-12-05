@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Header from "../Header/Header";
+import Header from "components/Header/Header";
 import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -12,7 +12,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import FormControl from "@mui/material/FormControl";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import store from "../../store/store";
+import store from "store/store";
 const countries: any = {
   USA: {
     value: "+1-USA",
@@ -150,7 +150,7 @@ export default function Mainform() {
     setOpen(false);
   };
 
-  const MuiClasses = useStyles();
+  const formClasses = useStyles();
 
   const {
     register,
@@ -160,20 +160,19 @@ export default function Mainform() {
 
   const FormSubmitHandler: SubmitHandler<IFormInput> = (data: IFormInput) => {
     history.push("./loading");
-    console.log(data);
     store.dispatch({
       type: "ADD_DATA",
       payload: data,
     });
   };
-  const [Fname, setFName] = useState("");
+  const [fName, setfName] = useState("");
   const [Lname, setLName] = useState("");
   let FormChecker = false;
   //Redux
 
   return (
     <>
-      <div className={MuiClasses.root}>
+      <div className={formClasses.root}>
         <div>
           <Header />
           <form onSubmit={handleSubmit(FormSubmitHandler)}>
@@ -188,21 +187,21 @@ export default function Mainform() {
               <TextField
                 id="outlined-size-normal"
                 label="First Name"
-                value={Fname}
-                className={MuiClasses.Fname}
+                value={fName}
+                className={formClasses.Fname}
                 {...register("firstName", { required: true })}
                 onInput={(evt: any) => {
                   const caps =
                     evt.target.value.charAt(0).toUpperCase() +
                     evt.target.value.slice(1);
-                  setFName(caps);
+                  setfName(caps);
                 }}
               />
               <TextField
                 id="outlined-size-normal"
                 label="Last Name"
                 value={Lname}
-                className={MuiClasses.Lname}
+                className={formClasses.Lname}
                 {...register("lastName", { required: true })}
                 onInput={(evt: any) => {
                   const caps =
@@ -212,13 +211,13 @@ export default function Mainform() {
                 }}
               />
               {errors.firstName && (
-                <span className={MuiClasses.errorMsg}>
+                <span className={formClasses.errorMsg}>
                   <b>First Name is required</b>
                   {(FormChecker = true)}
                 </span>
               )}
               {errors.lastName && (
-                <span className={MuiClasses.ErrorMsg2}>
+                <span className={formClasses.ErrorMsg2}>
                   <b>Last Name is required</b>
                   {(FormChecker = true)}
                 </span>
@@ -226,12 +225,12 @@ export default function Mainform() {
             </Box>
             <Button
               onClick={() => setOpen(true)}
-              className={MuiClasses.CountryBtnPos}
+              className={formClasses.CountryBtnPos}
             >
               <img
                 src={country.icon}
                 alt={country.value}
-                className={MuiClasses.CountryImg}
+                className={formClasses.CountryImg}
               />
             </Button>
             <Dialog
@@ -257,13 +256,13 @@ export default function Mainform() {
                     {Object.keys(countries).map((country, index) => (
                       <Button
                         key={index}
-                        className={MuiClasses.CountryBtn}
+                        className={formClasses.CountryBtn}
                         onClick={() => FlagsChanger(countries[country])}
                       >
                         <img
                           src={countries[country].icon}
                           alt={countries[country].value}
-                          className={MuiClasses.CountryImg2}
+                          className={formClasses.CountryImg2}
                         />
                         {countries[country].value}
                       </Button>
@@ -277,11 +276,11 @@ export default function Mainform() {
               id="outlined-basic"
               label="Phone Number"
               variant="outlined"
-              className={MuiClasses.phoneNumber}
+              className={formClasses.phoneNumber}
               {...register("PhoneNumber", { required: true })}
             />
             {errors.PhoneNumber && (
-              <span className={MuiClasses.errorMsg}>
+              <span className={formClasses.errorMsg}>
                 <b>Phone Number is required</b>
                 {(FormChecker = true)}
               </span>
@@ -289,14 +288,14 @@ export default function Mainform() {
             <TextField
               fullWidth
               label="Email"
-              className={MuiClasses.TxtBottom}
+              className={formClasses.TxtBottom}
               {...register("email", {
                 required: true,
                 pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
               })}
             />
             {errors.email && (
-              <span className={MuiClasses.errorMsg}>
+              <span className={formClasses.errorMsg}>
                 <b>Invalid email address</b>
                 {(FormChecker = true)}
               </span>
@@ -307,7 +306,7 @@ export default function Mainform() {
               type="password"
               label="Password"
               id="filled-adornment-password"
-              className={MuiClasses.TxtBottom}
+              className={formClasses.TxtBottom}
               {...register("password", {
                 required: true,
                 minLength: 8,
@@ -315,7 +314,7 @@ export default function Mainform() {
               })}
             />
             {errors.password && (
-              <span className={MuiClasses.errorMsg}>
+              <span className={formClasses.errorMsg}>
                 <b>
                   {" "}
                   Oops! You need a password longer than 8 characters with
@@ -328,7 +327,7 @@ export default function Mainform() {
               type="submit"
               value="N E X T"
               defaultValue="Next"
-              className={MuiClasses.submitBtn}
+              className={formClasses.submitBtn}
               disabled={FormChecker}
             ></input>
           </form>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import "./Loader.css";
-import Api from "../API/Api";
+import Api from "components/API/Api";
 import ClipLoader from "react-spinners/ClipLoader";
 import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material";
