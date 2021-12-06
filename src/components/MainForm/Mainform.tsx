@@ -148,20 +148,19 @@ export default function Mainform() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<IFormInput>();
 
   const FormSubmitHandler: SubmitHandler<IFormInput> = (data: IFormInput) => {
     history.push("./loading");
     console.log(data);
-    
+
     store.dispatch({
       type: "ADD_DATA",
       payload: data,
     });
   };
-  const [fName, setfName] = useState("");
-  const [Lname, setLName] = useState("");
   let FormChecker = false;
 
   return (
@@ -182,14 +181,13 @@ export default function Mainform() {
                 error={!!errors.firstName}
                 id="outlined-size-normal"
                 label="First Name"
-                value={fName}
                 className={formClasses.Fname}
                 {...register("firstName", { required: true })}
                 onInput={(evt: any) => {
                   const caps =
                     evt.target.value.charAt(0).toUpperCase() +
                     evt.target.value.slice(1);
-                  setfName(caps);
+                  setValue("firstName",caps);
                 }}
                 helperText={
                   !!errors.firstName && <p>First Name is Required!</p>
@@ -199,14 +197,13 @@ export default function Mainform() {
                 error={!!errors.lastName}
                 id="outlined-size-normal"
                 label="Last Name"
-                value={Lname}
                 className={formClasses.Lname}
                 {...register("lastName", { required: true })}
                 onInput={(evt: any) => {
                   const caps =
                     evt.target.value.charAt(0).toUpperCase() +
                     evt.target.value.slice(1);
-                  setLName(caps);
+                  setValue("lastName",caps);
                 }}
                 helperText={!!errors.lastName && <p>Last Name Is Required!</p>}
               />
