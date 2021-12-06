@@ -4,7 +4,7 @@ import Splash from "components/LoadingScreen/Splash";
 import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
 import { Provider } from "react-redux";
-import store from "store/store";
+import store from "store/mainForm/store";
 
 
 function App() {

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Header from "components/Header/Header";
 import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import InputAdornment from "@mui/material/InputAdornment";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -12,7 +13,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import FormControl from "@mui/material/FormControl";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import store from "store/store";
+import store from "store/mainForm/store";
 const countries: any = {
   USA: {
     value: "+1-USA",
@@ -29,14 +30,23 @@ const countries: any = {
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
-  root: {
+  bgMain: {
     height: "100vh",
+    width: "100vw",
+    backgroundColor: "#E5E5E5",
+    display: "flex",
+    alignItems: "center",
+    margin: "auto",
+  },
+  root: {
+    height: "65%",
     width: "20%",
     borderRadius: "5px",
     padding: "20px",
     display: "flex",
     alignItems: "center",
     margin: "auto",
+    backgroundColor: "white",
   },
   iconifyMain: {
     height: "100%",
@@ -70,7 +80,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
   },
   CountryImg: {
-    width: "100%",
+    width: "45px",
+    cursor: "pointer",
   },
   CountryBtn: {
     width: "20%",
@@ -80,11 +91,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "center",
   },
   CountryBtnPos: {
-    top: "30px",
-    right: "10px",
+    top: "10px",
+    left: "-10px",
     width: "20%",
-    height: "0px",
-    margin: "10px 78% 0 0 !important",
+    margin: "0 80% 27% 0 !important",
   },
   CountryImg2: {
     width: "80%",
@@ -98,9 +108,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   Fname: {
     width: "44% !important",
     marginRight: "7% !important",
+    bottom: "12px",
   },
   Lname: {
     width: "44% !important",
+    bottom: "12px",
   },
   TxtBottom: {
     marginBottom: "20px !important",
@@ -149,22 +161,20 @@ export default function Mainform() {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
-  } = useForm<IFormInput>();
+    formState: { errors, isValid },
+  } = useForm<IFormInput>({ mode: "all" });
 
   const FormSubmitHandler: SubmitHandler<IFormInput> = (data: IFormInput) => {
     history.push("./loading");
-    console.log(data);
 
     store.dispatch({
       type: "ADD_DATA",
       payload: data,
     });
   };
-  let FormChecker = false;
 
   return (
-    <>
+    <div className={formClasses.bgMain}>
       <div className={formClasses.root}>
         <div>
           <Header />
@@ -187,7 +197,7 @@ export default function Mainform() {
                   const caps =
                     evt.target.value.charAt(0).toUpperCase() +
                     evt.target.value.slice(1);
-                  setValue("firstName",caps);
+                  setValue("firstName", caps);
                 }}
                 helperText={
                   !!errors.firstName && <p>First Name is Required!</p>
@@ -203,74 +213,80 @@ export default function Mainform() {
                   const caps =
                     evt.target.value.charAt(0).toUpperCase() +
                     evt.target.value.slice(1);
-                  setValue("lastName",caps);
+                  setValue("lastName", caps);
                 }}
                 helperText={!!errors.lastName && <p>Last Name Is Required!</p>}
               />
-              {errors.firstName && (FormChecker = true)}
-              {errors.lastName && (FormChecker = true)}
             </Box>
-            <Button
-              onClick={() => setOpen(true)}
-              className={formClasses.CountryBtnPos}
-            >
-              <img
-                src={country.icon}
-                alt={country.value}
-                className={formClasses.CountryImg}
-              />
-            </Button>
-            <Dialog
-              disableEscapeKeyDown
-              open={open}
-              onClose={(
-                event: React.SyntheticEvent<unknown>,
-                reason?: string
-              ) => {
-                if (reason !== "backdropClick") {
-                  setOpen(false);
-                }
-              }}
-            >
-              <DialogTitle>Select Country</DialogTitle>
-              <DialogContent>
-                <Box
-                  component="form"
-                  sx={{ display: "flex", flexWrap: "wrap" }}
-                >
-                  <FormControl sx={{ m: 1, minWidth: 230, minHeight: 140 }}>
-                    <MenuItem value=""></MenuItem>
-                    {Object.keys(countries).map((country, index) => (
-                      <Button
-                        key={index}
-                        className={formClasses.CountryBtn}
-                        onClick={() => FlagsChanger(countries[country])}
-                      >
-                        <img
-                          src={countries[country].icon}
-                          alt={countries[country].value}
-                          className={formClasses.CountryImg2}
-                        />
-                        {countries[country].value}
-                      </Button>
-                    ))}
-                  </FormControl>
-                </Box>
-              </DialogContent>
-            </Dialog>
             <TextField
               error={!!errors.PhoneNumber}
+              fullWidth
               type="number"
               id="outlined-basic"
               label="Phone Number"
               variant="outlined"
-              className={formClasses.phoneNumber}
+              className={formClasses.TxtBottom}
               {...register("PhoneNumber", { required: true })}
               helperText={
                 !!errors.PhoneNumber && <p>Phone Number Is Required!</p>
               }
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Button
+                      onClick={() => setOpen(true)}
+                      className={formClasses.CountryBtnPos}
+                    >
+                      <img
+                        src={country.icon}
+                        alt={country.value}
+                        className={formClasses.CountryImg}
+                      />
+                    </Button>
+                    <Dialog
+                      disableEscapeKeyDown
+                      open={open}
+                      onClose={(
+                        event: React.SyntheticEvent<unknown>,
+                        reason?: string
+                      ) => {
+                        if (reason !== "backdropClick") {
+                          setOpen(false);
+                        }
+                      }}
+                    >
+                      <DialogTitle>Select Country</DialogTitle>
+                      <DialogContent>
+                        <Box
+                          component="form"
+                          sx={{ display: "flex", flexWrap: "wrap" }}
+                        >
+                          <FormControl
+                            sx={{ m: 1, minWidth: 230, minHeight: 140 }}
+                          >
+                            <MenuItem value=""></MenuItem>
+                            {Object.keys(countries).map((country, index) => (
+                              <Button
+                                key={index}
+                                className={formClasses.CountryBtn}
+                                onClick={() => FlagsChanger(countries[country])}
+                              >
+                                <img
+                                  src={countries[country].icon}
+                                  alt={countries[country].value}
+                                  className={formClasses.CountryImg2}
+                                />
+                                {countries[country].value}
+                              </Button>
+                            ))}
+                          </FormControl>
+                        </Box>
+                      </DialogContent>
+                    </Dialog>
+                  </InputAdornment>
+                ),
+              }}
             />
-            {errors.PhoneNumber && (FormChecker = true)}
             <TextField
               error={!!errors.email}
               fullWidth
@@ -282,8 +298,6 @@ export default function Mainform() {
               })}
               helperText={!!errors.email && <p>Invalid Email!</p>}
             />
-            {errors.email && (FormChecker = true)}
-
             <TextField
               error={!!errors.password}
               fullWidth
@@ -305,17 +319,16 @@ export default function Mainform() {
                 )
               }
             />
-            {errors.password && (FormChecker = true)}
             <input
               type="submit"
               value="N E X T"
               defaultValue="Next"
               className={formClasses.submitBtn}
-              disabled={FormChecker}
+              disabled={!isValid}
             ></input>
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }
