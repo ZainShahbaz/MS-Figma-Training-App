@@ -11,9 +11,13 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import FormControl from "@mui/material/FormControl";
+
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import store from "store/mainForm/store";
+
+import { useDispatch } from "react-redux";
+import { mainFormData } from "store/actions/mainForm/index";
+
 const countries: any = {
   USA: {
     value: "+1-USA",
@@ -164,13 +168,11 @@ export default function Mainform() {
     formState: { errors, isValid },
   } = useForm<IFormInput>({ mode: "all" });
 
+  const dispatch = useDispatch();
+
   const FormSubmitHandler: SubmitHandler<IFormInput> = (data: IFormInput) => {
     history.push("./loading");
-
-    store.dispatch({
-      type: "ADD_DATA",
-      payload: data,
-    });
+    dispatch(mainFormData(data));
   };
 
   return (
