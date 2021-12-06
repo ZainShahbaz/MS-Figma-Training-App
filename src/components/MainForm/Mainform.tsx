@@ -76,8 +76,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "20%",
     padding: "0px 10px !important",
     margin: "5px 10px !important",
-    alignItems:"center",
-    justifyContent:"center",
+    alignItems: "center",
+    justifyContent: "center",
   },
   CountryBtnPos: {
     top: "30px",
@@ -90,13 +90,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "80%",
     padding: "30px",
     marginLeft: "55px",
-  },
-  ErrorMsg2: {
-    alignItems: "center",
-    display: "contents",
-    color: "red",
-    fontSize: "small",
-    fontFamily: "Raleway, sans-serif",
   },
   DisBtn: {
     backgroundColor: "#baf3e7",
@@ -160,6 +153,8 @@ export default function Mainform() {
 
   const FormSubmitHandler: SubmitHandler<IFormInput> = (data: IFormInput) => {
     history.push("./loading");
+    console.log(data);
+    
     store.dispatch({
       type: "ADD_DATA",
       payload: data,
@@ -168,7 +163,6 @@ export default function Mainform() {
   const [fName, setfName] = useState("");
   const [Lname, setLName] = useState("");
   let FormChecker = false;
-  //Redux
 
   return (
     <>
@@ -185,6 +179,7 @@ export default function Mainform() {
               autoComplete="off"
             >
               <TextField
+                error={!!errors.firstName}
                 id="outlined-size-normal"
                 label="First Name"
                 value={fName}
@@ -196,8 +191,12 @@ export default function Mainform() {
                     evt.target.value.slice(1);
                   setfName(caps);
                 }}
+                helperText={
+                  !!errors.firstName && <p>First Name is Required!</p>
+                }
               />
               <TextField
+                error={!!errors.lastName}
                 id="outlined-size-normal"
                 label="Last Name"
                 value={Lname}
@@ -209,19 +208,10 @@ export default function Mainform() {
                     evt.target.value.slice(1);
                   setLName(caps);
                 }}
+                helperText={!!errors.lastName && <p>Last Name Is Required!</p>}
               />
-              {errors.firstName && (
-                <span className={formClasses.errorMsg}>
-                  <b>First Name is required</b>
-                  {(FormChecker = true)}
-                </span>
-              )}
-              {errors.lastName && (
-                <span className={formClasses.ErrorMsg2}>
-                  <b>Last Name is required</b>
-                  {(FormChecker = true)}
-                </span>
-              )}
+              {errors.firstName && (FormChecker = true)}
+              {errors.lastName && (FormChecker = true)}
             </Box>
             <Button
               onClick={() => setOpen(true)}
@@ -272,20 +262,20 @@ export default function Mainform() {
               </DialogContent>
             </Dialog>
             <TextField
+              error={!!errors.PhoneNumber}
               type="number"
               id="outlined-basic"
               label="Phone Number"
               variant="outlined"
               className={formClasses.phoneNumber}
               {...register("PhoneNumber", { required: true })}
+              helperText={
+                !!errors.PhoneNumber && <p>Phone Number Is Required!</p>
+              }
             />
-            {errors.PhoneNumber && (
-              <span className={formClasses.errorMsg}>
-                <b>Phone Number is required</b>
-                {(FormChecker = true)}
-              </span>
-            )}
+            {errors.PhoneNumber && (FormChecker = true)}
             <TextField
+              error={!!errors.email}
               fullWidth
               label="Email"
               className={formClasses.TxtBottom}
@@ -293,15 +283,12 @@ export default function Mainform() {
                 required: true,
                 pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
               })}
+              helperText={!!errors.email && <p>Invalid Email!</p>}
             />
-            {errors.email && (
-              <span className={formClasses.errorMsg}>
-                <b>Invalid email address</b>
-                {(FormChecker = true)}
-              </span>
-            )}
+            {errors.email && (FormChecker = true)}
 
             <TextField
+              error={!!errors.password}
               fullWidth
               type="password"
               label="Password"
@@ -312,17 +299,16 @@ export default function Mainform() {
                 minLength: 8,
                 pattern: /^(?:(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*)+$/,
               })}
+              helperText={
+                !!errors.password && (
+                  <p>
+                    Oops! You need a password longer than 8 characters with
+                    numbers and letters.
+                  </p>
+                )
+              }
             />
-            {errors.password && (
-              <span className={formClasses.errorMsg}>
-                <b>
-                  {" "}
-                  Oops! You need a password longer than 8 characters with
-                  numbers and letters.
-                </b>
-                {(FormChecker = true)}
-              </span>
-            )}
+            {errors.password && (FormChecker = true)}
             <input
               type="submit"
               value="N E X T"
