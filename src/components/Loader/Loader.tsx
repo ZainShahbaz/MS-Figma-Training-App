@@ -5,7 +5,7 @@ import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material";
 
 const useStyles = makeStyles((theme: Theme) => ({
-  Splashroot: {
+  LoaderRoot: {
     height: "100vh",
     width: "100%",
     display: "flex",
@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     textAlign: "center",
   },
 }));
-export default function Splash() {
+
+export default function Loader() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -24,9 +25,9 @@ export default function Splash() {
     }, 2000);
   }, []);
 
-const SplashClasses=useStyles();
+  const LoaderClasses = useStyles();
   return (
-    <div className={SplashClasses.Splashroot}>
+    <div className={LoaderClasses.LoaderRoot}>
       {loading ? (
         <ClipLoader color={"#02E0B1"} loading={loading} size={50} />
       ) : (

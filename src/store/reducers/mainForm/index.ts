@@ -1,19 +1,21 @@
-import { createStore } from "redux";
-import { ADD_DATA } from "store/types";
+import { ADD_DATA, SET_REDUX_KEY } from "store/types";
 
 let intialState = {
   user: {},
 };
-function formReducer(state = intialState, action: any) {
+export default function formReducer(state = intialState, action: any) {
   switch (action.type) {
-    case action.type === ADD_DATA:
+    case ADD_DATA:
       return {
         ...state,
         user: action.payload,
+      };
+    case SET_REDUX_KEY:
+      return {
+        ...state,
+        [action.payload.key]: action.payload.value,
       };
     default:
   }
   return state;
 }
-let store = createStore(formReducer);
-export default store;

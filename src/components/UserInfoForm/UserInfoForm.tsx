@@ -16,7 +16,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
-import { mainFormData } from "store/actions/mainForm/index";
+import { addUserInfoToReduxAction } from "store/actions/mainForm/index";
 
 const countries: any = {
   USA: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: "auto",
   },
   root: {
-    height: "65%",
+    height: "57%",
     width: "20%",
     borderRadius: "5px",
     padding: "20px",
@@ -172,7 +172,7 @@ export default function Mainform() {
 
   const FormSubmitHandler: SubmitHandler<IFormInput> = (data: IFormInput) => {
     history.push("./loading");
-    dispatch(mainFormData(data));
+    dispatch(addUserInfoToReduxAction(data));
   };
 
   return (

@@ -1,20 +1,22 @@
-import React, { useEffect } from "react";
-import AppleIcon from '@mui/icons-material/Apple';
-import axios from "axios";
+import React from "react";
+import { RootStateOrAny, useSelector } from "react-redux";
+import AppleIcon from "@mui/icons-material/Apple";
 
 export default function Api() {
-  useEffect(() => {
-    async function ApiData() {
-      const res = await axios.get("https://api.publicapis.org/entries");
-      console.log("API Data: ", res.data.entries);
-    }
-    ApiData();
-  },[]);
+  const data = useSelector((state: RootStateOrAny) => state.user);
 
   return (
     <div>
-     <h1><AppleIcon/> API Page</h1>
-     <h3>API data is in console.log</h3>
+      <h1>
+        <AppleIcon /> API Page
+      </h1>
+      <h3>API data is in console.log</h3>
+      <br />
+      <p>
+        Data from Redux: <b>{data.firstName}</b>
+        <br />
+        User's Email: <b>{data.email}</b>{" "}
+      </p>
     </div>
   );
 }
