@@ -13,7 +13,7 @@ export default function Api() {
         <b> API Page</b>
       </Typography>
       <Typography variant="h3" gutterBottom component="div">
-        <AppleIcon /> <i>API data is in console.log</i>
+        <AppleIcon /> Showing first <b>fifty</b> (50) objects data 
       </Typography>
       <br />
       <Typography variant="subtitle1" gutterBottom component="div">

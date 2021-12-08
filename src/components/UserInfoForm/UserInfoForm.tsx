@@ -171,8 +171,8 @@ export default function UserInfoForm() {
   const dispatch = useDispatch();
 
   const FormSubmitHandler: SubmitHandler<IFormInput> = (data: IFormInput) => {
-    history.push("./loading");
     dispatch(addUserInfoToReduxAction(data));
+    history.push("/loading");
   };
 
   return (

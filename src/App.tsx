@@ -11,11 +11,11 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <BrowserRouter>
-          <Route exact path="/">
-            <UserInfoForm />
-          </Route>
           <Route path="/Loading">
             <Loader />
+          </Route>
+          <Route exact path="/">
+            <UserInfoForm />
           </Route>
         </BrowserRouter>
       </Provider>
