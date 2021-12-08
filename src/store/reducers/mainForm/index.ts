@@ -2,7 +2,7 @@ import { ADD_USER_INFO, SET_REDUX_KEY, API_DATA } from "store/types";
 
 let intialState = {
   user: {},
-  apiData: {},
+  apiData: [],
 };
 export default function formReducer(state = intialState, action: any) {
   switch (action.type) {

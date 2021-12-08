@@ -2,6 +2,7 @@ import React from "react";
 import { RootStateOrAny, useSelector } from "react-redux";
 import { Typography } from "@mui/material";
 import AppleIcon from "@mui/icons-material/Apple";
+import ApiTable from "components/ApiTable/ApiTable";
 
 export default function Api() {
   const data = useSelector((state: RootStateOrAny) => state.user);
@@ -20,6 +21,8 @@ export default function Api() {
         <br />
         User's Email: <b>{data.email}</b>{" "}
       </Typography>
+      <br />
+      <ApiTable />
     </div>
   );
 }
