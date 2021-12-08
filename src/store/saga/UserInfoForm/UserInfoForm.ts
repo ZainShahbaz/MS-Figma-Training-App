@@ -1,4 +1,4 @@
-import { ADD_USER_INFO, SET_REDUX_KEY } from "store/types";
+import { ADD_USER_INFO } from "store/types";
 import { call, takeLatest, put } from "redux-saga/effects";
 import axios from "axios";
 import { addApiDataFromRedux } from "store/actions/addApiDataFromRedux";
