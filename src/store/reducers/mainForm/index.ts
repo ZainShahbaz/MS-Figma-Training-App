@@ -1,11 +1,12 @@
-import { ADD_DATA, SET_REDUX_KEY } from "store/types";
+import { ADD_USER_INFO, SET_REDUX_KEY, API_DATA } from "store/types";
 
 let intialState = {
   user: {},
+  apiData: {},
 };
 export default function formReducer(state = intialState, action: any) {
   switch (action.type) {
-    case ADD_DATA:
+    case ADD_USER_INFO:
       return {
         ...state,
         user: action.payload,
@@ -14,6 +15,11 @@ export default function formReducer(state = intialState, action: any) {
       return {
         ...state,
         [action.payload.key]: action.payload.value,
+      };
+    case API_DATA:
+      return {
+        ...state,
+        apiData: action.payload,
       };
     default:
   }

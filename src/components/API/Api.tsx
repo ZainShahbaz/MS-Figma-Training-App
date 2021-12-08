@@ -1,5 +1,6 @@
 import React from "react";
 import { RootStateOrAny, useSelector } from "react-redux";
+import { Typography } from "@mui/material";
 import AppleIcon from "@mui/icons-material/Apple";
 
 export default function Api() {
@@ -7,16 +8,18 @@ export default function Api() {
 
   return (
     <div>
-      <h1>
-        <AppleIcon /> API Page
-      </h1>
-      <h3>API data is in console.log</h3>
+      <Typography variant="h1" component="div" gutterBottom>
+        <b> API Page</b>
+      </Typography>
+      <Typography variant="h3" gutterBottom component="div">
+        <AppleIcon /> <i>API data is in console.log</i>
+      </Typography>
       <br />
-      <p>
+      <Typography variant="subtitle1" gutterBottom component="div">
         Data from Redux: <b>{data.firstName}</b>
         <br />
         User's Email: <b>{data.email}</b>{" "}
-      </p>
+      </Typography>
     </div>
   );
 }

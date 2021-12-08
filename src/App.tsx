@@ -1,5 +1,5 @@
 import React from "react";
-import Mainform from "components/UserInfoForm/UserInfoForm";
+import UserInfoForm from "components/UserInfoForm/UserInfoForm";
 import Loader from "components/Loader/Loader";
 import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
@@ -12,7 +12,7 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           <Route exact path="/">
-            <Mainform />
+            <UserInfoForm />
           </Route>
           <Route path="/Loading">
             <Loader />

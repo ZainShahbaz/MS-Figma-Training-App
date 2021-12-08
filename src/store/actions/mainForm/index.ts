@@ -1,6 +1,6 @@
-import { ADD_DATA } from "store/types";
+import { ADD_USER_INFO } from "store/types";
 
 export const addUserInfoToReduxAction = (userInfo: any) => ({
-  type: ADD_DATA,
+  type: ADD_USER_INFO,
   payload: userInfo,
 });

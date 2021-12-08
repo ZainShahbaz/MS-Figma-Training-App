@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   submitBtn: {
     width: "100%",
-    backgroundColor: "#02e0b1",
+    backgroundColor: "#0fb490 !important",
     color: "white",
     padding: "14px 20px",
     margin: "8px 0",
@@ -132,11 +132,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     cursor: "pointer",
     height: "6vh",
     "&:disabled": {
-      backgroundColor: "#baf3e7",
-      color: "black",
+      backgroundColor: "#baf3e7 !important",
+      color: "black !important",
     },
     "&:hover": {
-      backgroundColor: "#0fb490",
+      backgroundColor: "#02e0b1 !important",
     },
   },
 }));
@@ -149,7 +149,7 @@ interface IFormInput {
   password: string;
 }
 
-export default function Mainform() {
+export default function UserInfoForm() {
   const [open, setOpen] = React.useState(false);
   const history = useHistory();
   const [country, setCountry] = React.useState<any>(countries.USA);
@@ -228,7 +228,7 @@ export default function Mainform() {
               label="Phone Number"
               variant="outlined"
               className={formClasses.TxtBottom}
-              {...register("PhoneNumber", { required: true })}
+              {...register("PhoneNumber", { required: true, minLength: 9 })}
               helperText={
                 !!errors.PhoneNumber && <p>Phone Number Is Required!</p>
               }
@@ -245,46 +245,6 @@ export default function Mainform() {
                         className={formClasses.CountryImg}
                       />
                     </Button>
-                    <Dialog
-                      disableEscapeKeyDown
-                      open={open}
-                      onClose={(
-                        event: React.SyntheticEvent<unknown>,
-                        reason?: string
-                      ) => {
-                        if (reason !== "backdropClick") {
-                          setOpen(false);
-                        }
-                      }}
-                    >
-                      <DialogTitle>Select Country</DialogTitle>
-                      <DialogContent>
-                        <Box
-                          component="form"
-                          sx={{ display: "flex", flexWrap: "wrap" }}
-                        >
-                          <FormControl
-                            sx={{ m: 1, minWidth: 230, minHeight: 140 }}
-                          >
-                            <MenuItem value=""></MenuItem>
-                            {Object.keys(countries).map((country, index) => (
-                              <Button
-                                key={index}
-                                className={formClasses.CountryBtn}
-                                onClick={() => FlagsChanger(countries[country])}
-                              >
-                                <img
-                                  src={countries[country].icon}
-                                  alt={countries[country].value}
-                                  className={formClasses.CountryImg2}
-                                />
-                                {countries[country].value}
-                              </Button>
-                            ))}
-                          </FormControl>
-                        </Box>
-                      </DialogContent>
-                    </Dialog>
                   </InputAdornment>
                 ),
               }}
@@ -321,16 +281,49 @@ export default function Mainform() {
                 )
               }
             />
-            <input
+            <Button
+              variant="contained"
               type="submit"
-              value="N E X T"
-              defaultValue="Next"
               className={formClasses.submitBtn}
               disabled={!isValid}
-            ></input>
+            >
+              N E X T
+            </Button>
           </form>
         </div>
       </div>
+      <Dialog
+        disableEscapeKeyDown
+        open={open}
+        onClose={(event: React.SyntheticEvent<unknown>, reason?: string) => {
+          if (reason !== "backdropClick") {
+            setOpen(false);
+          }
+        }}
+      >
+        <DialogTitle>Select Country</DialogTitle>
+        <DialogContent>
+          <Box component="form" sx={{ display: "flex", flexWrap: "wrap" }}>
+            <FormControl sx={{ m: 1, minWidth: 230, minHeight: 140 }}>
+              <MenuItem value=""></MenuItem>
+              {Object.keys(countries).map((country, index) => (
+                <Button
+                  key={index}
+                  className={formClasses.CountryBtn}
+                  onClick={() => FlagsChanger(countries[country])}
+                >
+                  <img
+                    src={countries[country].icon}
+                    alt={countries[country].value}
+                    className={formClasses.CountryImg2}
+                  />
+                  {countries[country].value}
+                </Button>
+              ))}
+            </FormControl>
+          </Box>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
