@@ -1,5 +1,5 @@
 import React from "react";
-import Api from "components/API/Api";
+import Api from "components/API";
 import ClipLoader from "react-spinners/ClipLoader";
 import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material";

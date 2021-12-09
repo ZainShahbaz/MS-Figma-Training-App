@@ -1,28 +1,33 @@
 import { ADD_USER_INFO } from "store/types";
 import { call, takeLatest, put } from "redux-saga/effects";
 import axios from "axios";
-import { addApiDataFromRedux } from "store/actions/addApiDataFromRedux";
+import { addApiDataToReduxAction } from "store/actions/addApiDataToReduxAction";
 import { setReduxKey } from "store/actions/App";
+import { ToastContainer, toast } from "react-toastify";
 interface ResponseGenerator {
   data: any;
 }
-let some: any = [];
 const apiCall = (): Promise<ResponseGenerator> => {
   return axios
     .get("https://api.publicapis.org/entries")
     .then((response) => response);
 };
 function* sagaApiData() {
+  const errorNotify = (error: any) => {
+    toast.error(error, {
+      position: "top-right",
+    });
+  };
   try {
     yield put(setReduxKey("loaderKey", true));
     const res: ResponseGenerator = yield call(apiCall);
-    for (let i = 0; i < 50; i++) {
-      some.push(res.data.entries[i]);
-    }
-    yield put(addApiDataFromRedux(some));
+    let apiTablesData: any = [];
+    apiTablesData = res.data.entries.slice(0, 50);
+    yield put(addApiDataToReduxAction(apiTablesData));
     yield put(setReduxKey("loaderKey", false));
   } catch (error) {
-    console.log("error", error);
+    errorNotify(error);
+    <ToastContainer />;
   }
 }
 /// Watcher Function ///

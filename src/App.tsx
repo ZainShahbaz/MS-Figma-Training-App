@@ -1,6 +1,6 @@
 import React from "react";
-import UserInfoForm from "components/UserInfoForm/UserInfoForm";
-import Loader from "components/Loader/Loader";
+import UserInfoForm from "components/UserInfoForm";
+import Loader from "components/Loader";
 import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
 import { Provider } from "react-redux";

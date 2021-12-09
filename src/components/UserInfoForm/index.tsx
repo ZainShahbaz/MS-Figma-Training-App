@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "components/Header/Header";
+import Header from "components/Header";
 import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material";
 import TextField from "@mui/material/TextField";
