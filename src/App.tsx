@@ -5,6 +5,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
 import { Provider } from "react-redux";
 import store from "store/store";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route exact path="/">
             <UserInfoForm />
           </Route>
+          <ToastContainer />
         </BrowserRouter>
       </Provider>
     </div>
